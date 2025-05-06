@@ -1,0 +1,52 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.prod.myhisaab.app-merged_res-5:/values-night-v8_values-night-v8.arsc.flat",
+            "map": [
+                {
+                    "source": "/Users/dishantrajput/Documents/hisaab/android/app/src/main/res/values-night/styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "172,817",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "475,981"
+                    },
+                    "to": {
+                        "startLines": "2,6",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,236",
+                        "endLines": "5,8",
+                        "endColumns": "12,12",
+                        "endOffsets": "231,400"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "com.prod.myhisaab.app-merged_res-5:/values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "/Users/dishantrajput/Documents/hisaab/android/app/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "3,14",
+                        "startColumns": "4,4",
+                        "startOffsets": "173,818",
+                        "endLines": "7,16",
+                        "endColumns": "12,12",
+                        "endOffsets": "476,982"
+                    },
+                    "to": {
+                        "startLines": "2,6",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,236",
+                        "endLines": "5,8",
+                        "endColumns": "12,12",
+                        "endOffsets": "231,400"
+                    }
+                }
+            ]
+        }
+    ]
+}

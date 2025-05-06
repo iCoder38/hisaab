@@ -1,0 +1,8 @@
+com.prod.myhisaab.app-pngs-0 /Users/dishantrajput/Documents/hisaab/android/app/build/generated/res/pngs/debug
+com.prod.myhisaab.app-resValues-1 /Users/dishantrajput/Documents/hisaab/android/app/build/generated/res/resValues/debug
+com.prod.myhisaab.app-rs-2 /Users/dishantrajput/Documents/hisaab/android/app/build/generated/res/rs/debug
+com.prod.myhisaab.app-mergeDebugResources-3 /Users/dishantrajput/Documents/hisaab/android/app/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.prod.myhisaab.app-mergeDebugResources-4 /Users/dishantrajput/Documents/hisaab/android/app/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.prod.myhisaab.app-merged_res-5 /Users/dishantrajput/Documents/hisaab/android/app/build/intermediates/merged_res/debug
+com.prod.myhisaab.app-debug-6 /Users/dishantrajput/Documents/hisaab/android/app/src/debug/res
+com.prod.myhisaab.app-main-7 /Users/dishantrajput/Documents/hisaab/android/app/src/main/res

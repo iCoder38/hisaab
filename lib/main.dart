@@ -12,7 +12,7 @@ void main() async {
 
   runApp(
     const MaterialApp(
-// remove debug banner from top right corner
+      // remove debug banner from top right corner
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     ),
