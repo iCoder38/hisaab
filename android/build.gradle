@@ -1,42 +1,15 @@
-// buildscript {
-//     ext.kotlin_version = '1.8.10'
-//     repositories {
-//         google()
-//         mavenCentral()
-//     }
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
 
-//     dependencies {
-//         classpath 'com.android.tools.build:gradle:7.3.1'
-//         // START: FlutterFire Configuration
-//         classpath 'com.google.gms:google-services:4.3.10'
-//         // END: FlutterFire Configuration
-//         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-//     }
-// }
-
-// allprojects {
-//     repositories {
-//         google()
-//         mavenCentral()
-//     }
-// }
-
-// rootProject.buildDir = '../build'
-// subprojects {
-//     project.buildDir = "${rootProject.buildDir}/${project.name}"
-// }
-// subprojects {
-//     project.evaluationDependsOn(':app')
-// }
-
-// tasks.register("clean", Delete) {
-//     delete rootProject.buildDir
-// }
-
-plugins {
-    id "com.android.application" version "7.3.1" apply false
-    id "org.jetbrains.kotlin.android" version "1.8.10" apply false
-    id "dev.flutter.flutter-gradle-plugin" version "1.0.0" apply false
+    dependencies {
+        // Add the Android Gradle Plugin and Kotlin Gradle Plugin versions
+        classpath 'com.android.tools.build:gradle:8.0.0' // Update to latest stable version
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0" // Update Kotlin version
+        classpath 'com.google.gms:google-services:4.3.15' // For Firebase (if used)
+    }
 }
 
 allprojects {
@@ -44,4 +17,16 @@ allprojects {
         google()
         mavenCentral()
     }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
 }

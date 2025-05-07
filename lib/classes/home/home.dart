@@ -107,329 +107,281 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection(USERS_PATH)
-                .where('userId', isEqualTo: loginUserId())
-                // .where('type', isEqualTo: 'member')
-                .snapshots(),
-            builder:
-                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot2) {
-              if (snapshot2.hasData) {
-                // if (kDebugMode) {
+        body: _UIKIT(),
+      ),
+    );
+  }
 
-                var saveSnapshotValue2 = snapshot2.data!.docs;
-                //
+  Widget _UIKIT() {
+    return SingleChildScrollView(
+      child: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection(USERS_PATH)
+            .where('userId', isEqualTo: loginUserId())
+            .snapshots(),
+        builder:
+            (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot2) {
+          if (snapshot2.hasData) {
+            var saveSnapshotValue2 = snapshot2.data!.docs;
 
-                // GET DATA WHEN IMAGE PERMISSION IS NOT EMPTY
-                if (snapshot2.data!.docs.isNotEmpty) {
-                  //
-                  if (kDebugMode) {
-                    print('============================');
-                    print('HURRAY, YOU HAVE DATA');
-                    // print(saveSnapshotValue2[0].data());
-                    print(saveSnapshotValue2.length);
-                    // var dict = saveSnapshotValue2[0];
-                    // print(dict?['']);
-                    print('============================');
-                  }
-                  //
-                  strTotalPriceIs =
-                      saveSnapshotValue2.first['totalCount'].toString();
-                  //
-                } else {
-                  if (kDebugMode) {
-                    print('============================');
-                    print('OOPS!, YOUR DATA IS EMPTY');
-                    print('============================');
-                  }
-                }
-                //
-                if (saveSnapshotValue2.isEmpty) {
-                  return Center(
-                    child: textWithRegularStyle(
-                      'No Data Found',
-                      Colors.black,
-                      18.0,
-                    ),
-                  );
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 100,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(
-                                130,
-                                201,
-                                87,
-                                233,
-                              ),
-                              borderRadius: BorderRadius.circular(
-                                12.0,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: const Offset(
-                                    0,
-                                    3,
-                                  ), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                //
-                                textWithBoldStyle(
-                                  '\u{20B9} ${saveSnapshotValue2.first['totalCount'].toString()}',
-                                  Colors.black,
-                                  32.0,
-                                ),
-                              ],
-                            ),
-                          ),
-                          //
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          //
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: textWithRegularStyle(
-                              'Title',
-                              Colors.black,
-                              14.0,
-                            ),
-                          ),
-                          TextFormField(
-                            readOnly: true,
-                            controller: contTitle,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Title...',
-                            ),
-                            onTap: () {
-                              if (kDebugMode) {
-                                print("I'm here!!!");
-                              }
-                              //
-                              funcOpenTitleListDishu();
-                              // funcOpenTitleList();
-                              //
-                            },
-                            // validation
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter Title';
-                              }
-                              return null;
-                            },
-                          ),
-                          //
-                          //
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            height: 0.4,
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.black,
-                          ),
-                          //
-                          //
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: textWithRegularStyle(
-                              'Sub - Title',
-                              Colors.black,
-                              14.0,
-                            ),
-                          ),
-                          TextFormField(
-                            controller: contSubTitle,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Sub Title...',
-                            ),
-
-                            // validation
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter name';
-                              }
-                              return null;
-                            },
-                          ),
-                          //
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            height: 0.4,
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.black,
-                          ),
-                          //
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: textWithRegularStyle(
-                              'Price',
-                              Colors.black,
-                              14.0,
-                            ),
-                          ),
-                          TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: contPrice,
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              hintText: 'Price...',
-                            ),
-
-                            // validation
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter price';
-                              }
-                              return null;
-                            },
-                          ),
-                          //
-                          //
-                          Container(
-                            height: 0.4,
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.black,
-                          ),
-                          //
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (formKey.currentState!.validate()) {
-                                //
-                                funcSumPriceWithTotal();
-                              }
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                left: 10.0,
-                                right: 10.0,
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              height: 54,
-                              decoration: BoxDecoration(
-                                color: const Color.fromARGB(
-                                  130,
-                                  201,
-                                  87,
-                                  233,
-                                ),
-                                borderRadius: BorderRadius.circular(
-                                  30,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    // color: Colors.grey,
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: const Offset(
-                                      0,
-                                      3,
-                                    ), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: textWithBoldStyle(
-                                  'Update',
-                                  Colors.white,
-                                  16.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          //
-                          //
-                          //
-                          /*const SizedBox(
-                            height: 40,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              //
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MonthsListScreen(
-                                    strGetTotalPrice: strTotalPriceIs,
-                                  ),
-                                ),
-                              );
-                              //
-                            },
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                left: 10.0,
-                                right: 10.0,
-                              ),
-                              width: MediaQuery.of(context).size.width,
-                              height: 54,
-                              decoration: BoxDecoration(
-                                color: Colors.black54,
-                                borderRadius: BorderRadius.circular(
-                                  30,
-                                ),
-                              ),
-                              child: Center(
-                                child: textWithBoldStyle(
-                                  'History',
-                                  Colors.white,
-                                  16.0,
-                                ),
-                              ),
-                            ),
-                          ),*/
-                          //
-                          //
-                        ],
-                      ),
-                    ),
-                  );
-                }
-                //
-              } else if (snapshot2.hasError) {
-                if (kDebugMode) {
-                  print(snapshot2.error);
-                }
-                return Center(
-                  child: Text('Error: ${snapshot2.error}'),
-                );
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
+            // GET DATA WHEN IMAGE PERMISSION IS NOT EMPTY
+            if (snapshot2.data!.docs.isNotEmpty) {
+              //
+              /*if (kDebugMode) {
+                print('============================');
+                print('HURRAY, YOU HAVE DATA');
+                print(saveSnapshotValue2.length);
+                print('============================');
+              }*/
+              strTotalPriceIs =
+                  saveSnapshotValue2.first['totalCount'].toString();
+            } else {
+              /* if (kDebugMode) {
+                print('============================');
+                print('OOPS!, YOUR DATA IS EMPTY');
+                print('============================');
+              }*/
+            }
+            //
+            if (saveSnapshotValue2.isEmpty) {
+              return Center(
+                child: textWithRegularStyle(
+                  'No Data Found',
+                  Colors.black,
+                  18.0,
+                ),
               );
-            },
-          ),
-        ),
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(
+                            130,
+                            201,
+                            87,
+                            233,
+                          ),
+                          borderRadius: BorderRadius.circular(
+                            12.0,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: const Offset(
+                                0,
+                                3,
+                              ), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //
+                            textWithBoldStyle(
+                              '\u{20B9} ${saveSnapshotValue2.first['totalCount'].toString()}',
+                              Colors.black,
+                              32.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                      //
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: textWithRegularStyle(
+                          'Title',
+                          Colors.black,
+                          14.0,
+                        ),
+                      ),
+                      TextFormField(
+                        readOnly: false,
+                        controller: contTitle,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Title...',
+                        ),
+                        onTap: () {
+                          if (kDebugMode) {
+                            print("I'm here!!!");
+                          }
+                          //
+                          // funcOpenTitleListDishu();
+                          // funcOpenTitleList();
+                          //
+                        },
+                        // validation
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter Title';
+                          }
+                          return null;
+                        },
+                      ),
+                      //
+                      //
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 0.4,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.black,
+                      ),
+                      //
+                      //
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: textWithRegularStyle(
+                          'Sub - Title',
+                          Colors.black,
+                          14.0,
+                        ),
+                      ),
+                      TextFormField(
+                        controller: contSubTitle,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Sub Title...',
+                        ),
+
+                        // validation
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter name';
+                          }
+                          return null;
+                        },
+                      ),
+                      //
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        height: 0.4,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.black,
+                      ),
+                      //
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: textWithRegularStyle(
+                          'Price',
+                          Colors.black,
+                          14.0,
+                        ),
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        controller: contPrice,
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Price...',
+                        ),
+
+                        // validation
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter price';
+                          }
+                          return null;
+                        },
+                      ),
+                      //
+                      //
+                      Container(
+                        height: 0.4,
+                        width: MediaQuery.of(context).size.width,
+                        color: Colors.black,
+                      ),
+                      //
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (formKey.currentState!.validate()) {
+                            //
+                            funcSumPriceWithTotal();
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                            left: 10.0,
+                            right: 10.0,
+                          ),
+                          width: MediaQuery.of(context).size.width,
+                          height: 54,
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(
+                              130,
+                              201,
+                              87,
+                              233,
+                            ),
+                            borderRadius: BorderRadius.circular(
+                              30,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                // color: Colors.grey,
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                  0,
+                                  3,
+                                ), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: textWithBoldStyle(
+                              'Update',
+                              Colors.white,
+                              16.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            //
+          } else if (snapshot2.hasError) {
+            if (kDebugMode) {
+              print(snapshot2.error);
+            }
+            return Center(
+              child: Text('Error: ${snapshot2.error}'),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
@@ -437,49 +389,6 @@ class _HomeScreenState extends State<HomeScreen> {
   //
   //
   funcSumPriceWithTotal() {
-    /*showLoadingUI(context, 'please wait...');
-    //
-    if (kDebugMode) {
-      print('You entered price =====> ${contPrice.text}');
-    }
-    //
-
-    FirebaseFirestore.instance
-        .collection("${strFirebaseMode}totalCount")
-        .where("firebase_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .get()
-        .then((value) {
-      if (kDebugMode) {
-        print(value.docs);
-      }
-
-      if (value.docs.isEmpty) {
-        if (kDebugMode) {
-          print('======> NO USER FOUND');
-        }
-
-        //
-      } else {
-        for (var element in value.docs) {
-          if (kDebugMode) {
-            print('======> YES,  USER FOUND');
-          }
-          if (kDebugMode) {
-            print(element.data());
-          }
-          //
-          // update value total count
-          funcAddNewPriceWithOldPrice(
-            context,
-            element.data()["totalCount"].toString(),
-            element.id,
-          );
-        }
-      }
-    });*/
-
-    /**/
-    //
     updateUserIntTrips(context);
   }
 
@@ -495,37 +404,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   addDataInHistory(context) {
     debugPrint('${strFirebaseMode}HISTORY/${loginUserId()}/LIST');
-    // CollectionReference users = FirebaseFirestore.instance.collection(
-    //   '${strFirebaseMode}HISTORY/${loginUserId()}/LIST',
-    // );
-
-    // users
-    //     .add(
-    //       {
-    //         'title': contTitle.text.toString(),
-    //         'subTitle': contSubTitle.text.toString(),
-    //         'price': contPrice.text.toString(),
-    //         //
-    //         'userId': loginUserId(),
-    //         'email': loginUserEmail(),
-    //         'name': loginUserName(),
-    //         //
-    //         'createdDate': DateFormat('dd-MM-yyyy').format(DateTime.now()),
-    //         'id': get16DigitNumber(),
-    //         'calendarDate': DateFormat('dd').format(DateTime.now()),
-    //         'calendarMonth': DateFormat('MMMM').format(DateTime.now()),
-    //         'calendarYear': DateFormat('yyyy').format(DateTime.now()),
-    //         //
-    //         'timeStamp': currentTimestamp(),
-    //       },
-    //     )
-    //     .then((value) => {
-    //           print(value.id),
-    //           // funcEditFirestoreIdInRegistration2(context, value.id),
-    //         })
-    //     .catchError((error) => {
-
-    //         });
     addHistoryToFirestore(context);
   }
 
