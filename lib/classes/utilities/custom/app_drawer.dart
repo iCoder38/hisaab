@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myself_diary/classes/all_purchases.dart';
 import 'package:myself_diary/classes/splash.dart';
+import 'package:myself_diary/classes/utilities/custom/text.dart';
 import 'package:myself_diary/classes/utilities/firebase/resources.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -12,9 +14,17 @@ class AppDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text("Myself Hisaab"),
-              accountEmail: Text("hello@obonstore.com"),
+            UserAccountsDrawerHeader(
+              accountName: CustomText(
+                FirebaseAuthUtils.name.toString(),
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+              accountEmail: CustomText(
+                FirebaseAuthUtils.email.toString(),
+                color: Colors.grey,
+              ),
               currentAccountPicture: CircleAvatar(child: Icon(Icons.store)),
               margin: EdgeInsets.zero,
             ),
@@ -31,11 +41,11 @@ class AppDrawer extends StatelessWidget {
                 GetAllPurchasesScreen(userId: FirebaseAuthUtils.uid.toString()),
               ),
             ),
-            _drawerTile(
+            /*_drawerTile(
               icon: Icons.receipt_long,
               title: "Orders",
               onTap: () => _drawerAction(context, "Orders"),
-            ),
+            ),*/
             _drawerTile(
               icon: Icons.settings_outlined,
               title: "Settings",
@@ -51,7 +61,10 @@ class AppDrawer extends StatelessWidget {
             _drawerTile(
               icon: Icons.logout,
               title: "Logout",
-              onTap: () => _drawerAction(context, "Logout"),
+              onTap: () async {
+                Navigator.pop(context);
+                await FirebaseAuth.instance.signOut();
+              },
             ),
           ],
         ),
