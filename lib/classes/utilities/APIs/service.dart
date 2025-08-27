@@ -12,6 +12,7 @@ class ApiService {
     required String title,
     required String amount,
     required String description,
+    required String category,
   }) async {
     final url = Uri.parse("$_baseUrl/submit_purchases.php");
     final body = {
@@ -19,6 +20,7 @@ class ApiService {
       "title": title,
       "amount": amount,
       "description": description,
+      "category": category,
     };
 
     final response = await http.post(
@@ -92,5 +94,32 @@ class ApiService {
 
     // ✅ return full map (outer fields + purchases)
     return data;
+  }
+
+  /// ===============================
+  ///           CATEGORIES
+  /// ===============================
+
+  /// ✅ Get all categories
+  Future<List<Map<String, dynamic>>> getCategories() async {
+    final url = Uri.parse("$_baseUrl/get_categories.php");
+    final response = await http.get(
+      url,
+      headers: {"Accept": "application/json"},
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        "Failed to load categories: ${response.statusCode} ${response.body}",
+      );
+    }
+
+    final data = jsonDecode(response.body) as Map<String, dynamic>;
+    if (data['success'] != true) {
+      throw Exception(data['alertMessage'] ?? 'Failed to load categories');
+    }
+
+    // each item has: id, name, icon_name
+    return (data['categories'] as List).cast<Map<String, dynamic>>();
   }
 }

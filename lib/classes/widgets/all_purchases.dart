@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myself_diary/classes/utilities/APIs/helper.dart';
 import 'package:myself_diary/classes/utilities/custom/methods.dart';
 import 'package:myself_diary/classes/utilities/custom/text.dart';
 
@@ -64,16 +65,19 @@ Widget widgetHeaderPurchaseDetails(
 
 // CARD
 Card widgetCardUIKIT(
+  int index,
   String id,
   String title,
   String desc,
   String createdAt,
   String amount,
+  String categoryName,
+  String categoryImage,
 ) {
   return Card(
     margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
     child: ListTile(
-      leading: CircleAvatar(child: Text(id)),
+      leading: CircleAvatar(child: CustomText("${index + 1}")),
       title: CustomText(
         title,
         fontSize: 16,
@@ -86,6 +90,20 @@ Card widgetCardUIKIT(
           if (desc.isNotEmpty) const SizedBox(height: 4),
           CustomText(desc, fontSize: 12, maxLines: 4),
           const SizedBox(height: 4),
+          // ============== CATEGORY ====================
+          if (categoryName.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Row(
+              children: [
+                Icon(mapIcon(categoryImage), size: 16),
+                SizedBox(width: 4),
+                CustomText(categoryName, fontSize: 12, maxLines: 4),
+              ],
+            ),
+            const SizedBox(height: 4),
+          ],
+
+          // ===================================================================
           if (createdAt.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 4),

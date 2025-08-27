@@ -26,3 +26,19 @@ final purchasesProvider = FutureProvider.autoDispose
         limit: q.limit,
       );
     });
+
+/// ===============================
+///         CATEGORIES
+/// ===============================
+
+/// ✅ Fetch all categories from API
+/// Returns: List of maps like: [{'id': 1, 'name': 'Food & Dining'}, ...]
+final categoriesProvider =
+    FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
+      final api = ref.read(apiServiceProvider);
+      return api.getCategories();
+    });
+
+/// ✅ Hold currently-selected category ID (int?) and name (String?)
+final selectedCategoryIdProvider = StateProvider<int?>((ref) => null);
+final selectedCategoryNameProvider = StateProvider<String?>((ref) => null);

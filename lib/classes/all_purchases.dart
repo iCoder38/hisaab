@@ -200,8 +200,20 @@ class _GetAllPurchasesScreenState extends ConsumerState<GetAllPurchasesScreen> {
                 final amount = item['amount']?.toString() ?? '0';
                 final desc = item['description']?.toString() ?? '';
                 final createdAt = item['created_at']?.toString() ?? '';
+                final categoryName = item['category_name']?.toString() ?? '';
+                final categoryImage =
+                    item['category_icon_name']?.toString() ?? '';
 
-                return widgetCardUIKIT(id, title, desc, createdAt, amount);
+                return widgetCardUIKIT(
+                  index,
+                  id,
+                  title,
+                  desc,
+                  createdAt,
+                  amount,
+                  categoryName,
+                  categoryImage,
+                );
               },
             ),
           ),

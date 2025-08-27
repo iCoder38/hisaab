@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:myself_diary/classes/utilities/APIs/helper.dart';
 import 'package:myself_diary/classes/utilities/APIs/service.dart';
 import 'package:myself_diary/classes/utilities/app_utilities/extenstion.dart';
 import 'package:myself_diary/classes/utilities/app_utilities/utils.dart';
@@ -29,18 +30,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   String totalSpent = '';
 
   String uid = '';
-
-  // Categories Array
-  final List<Map<String, dynamic>> categories = [
-    {"name": "Grocery & Household", "icon": Icons.shopping_cart},
-    {"name": "Food & Dining", "icon": Icons.restaurant},
-    {"name": "Transport & Travel", "icon": Icons.directions_car},
-    {"name": "Shopping & Entertainment", "icon": Icons.shopping_bag},
-    {"name": "Health & Personal Care", "icon": Icons.health_and_safety},
-    {"name": "Education & Work", "icon": Icons.school},
-    {"name": "Bills & Finance", "icon": Icons.account_balance_wallet},
-    {"name": "Others / Miscellaneous", "icon": Icons.more_horiz},
-  ];
+  String saveSelectedCategoryId = '';
 
   @override
   void initState() {
@@ -76,13 +66,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void _handleSubmit(BuildContext context) async {
     final title = _titleController.text.trim();
     final amount = _amountController.text.trim();
-    // final description = _descriptionController.text.trim();
-    final category = _categoriesController.text.trim();
 
-    if (title.isEmpty || amount.isEmpty || category.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Please fill all fields")));
+    if (title.isEmpty || amount.isEmpty || saveSelectedCategoryId.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please fill all fields (including Category)"),
+        ),
+      );
       return;
     }
     context.dismissKeyboard();
@@ -200,29 +190,107 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   void _showCategoryDropdown() async {
-    final selected = await showModalBottomSheet<String>(
+    final selected = await showModalBottomSheet<Map<String, dynamic>>(
       context: context,
+      isScrollControlled: true,
       shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (context) {
-        return ListView.builder(
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              leading: Icon(categories[index]["icon"], color: Colors.blue),
-              title: Text(categories[index]["name"]),
-              onTap: () {
-                Navigator.pop(context, categories[index]["name"]);
-              },
-            );
-          },
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 40,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.black26,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                const Text(
+                  "Select Category",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(height: 8),
+
+                FutureBuilder<List<Map<String, dynamic>>>(
+                  future: ApiService().getCategories(),
+                  builder: (context, snap) {
+                    if (snap.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 40),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    if (snap.hasError) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Column(
+                          children: [
+                            Text(
+                              "Failed to load categories:\n${snap.error}",
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 12),
+                            ElevatedButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const Text("Close"),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+
+                    final cats = snap.data ?? [];
+                    if (cats.isEmpty) {
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24),
+                        child: Text("No categories found"),
+                      );
+                    }
+
+                    return Flexible(
+                      child: ListView.separated(
+                        shrinkWrap: true,
+                        itemCount: cats.length,
+                        separatorBuilder: (_, __) => const Divider(height: 1),
+                        itemBuilder: (context, index) {
+                          final c = cats[index];
+                          final id = (c['id'] as num).toInt();
+                          final name = c['name']?.toString() ?? 'Unnamed';
+                          final iconName = c['icon_name']?.toString();
+
+                          return ListTile(
+                            leading: Icon(mapIcon(iconName), size: 20),
+                            title: Text(name),
+                            onTap: () {
+                              Navigator.pop<Map<String, dynamic>>(context, {
+                                "id": id,
+                                "name": name,
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
+
     if (selected != null) {
       setState(() {
-        _categoriesController.text = selected;
+        _categoriesController.text = selected["name"].toString(); // show name
+        saveSelectedCategoryId = selected["id"].toString(); // keep ID
       });
     }
   }
@@ -257,6 +325,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       title: _titleController.text.toString(),
       amount: _amountController.text.toString(),
       description: _descriptionController.text.toString(),
+      category: saveSelectedCategoryId,
     );
 
     // Get total
@@ -271,9 +340,11 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         SnackBar(content: Text(submitRes["alertMessage"].toString())),
       );
       // clear fields
-      _titleController.text = "";
-      _amountController.text = "";
-      _descriptionController.text = "";
+      _titleController.clear();
+      _amountController.clear();
+      _descriptionController.clear();
+      _categoriesController.clear();
+      saveSelectedCategoryId = '';
       _fetchTotal();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
