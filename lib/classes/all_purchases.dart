@@ -1,14 +1,16 @@
+// ignore_for_file: unused_result
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myself_diary/classes/utilities/APIs/provider.dart';
 import 'package:myself_diary/classes/utilities/custom/app_drawer.dart';
-import 'package:myself_diary/classes/utilities/custom/methods.dart';
+// import 'package:myself_diary/classes/utilities/custom/methods.dart';
 import 'package:myself_diary/classes/utilities/custom/month_year_alert.dart';
-import 'package:myself_diary/classes/utilities/custom/text.dart';
+// import 'package:myself_diary/classes/utilities/custom/text.dart';
 import 'package:myself_diary/classes/widgets/all_purchases.dart';
 
 class GetAllPurchasesScreen extends ConsumerStatefulWidget {
-  const GetAllPurchasesScreen({super.key, this.userId = "1"});
+  const GetAllPurchasesScreen({super.key, required this.userId});
   final String userId;
 
   @override
@@ -186,7 +188,6 @@ class _GetAllPurchasesScreenState extends ConsumerState<GetAllPurchasesScreen> {
         Expanded(
           child: RefreshIndicator(
             onRefresh: () async {
-              // ignore: unused_result
               await ref.refresh(purchasesProvider(_query()).future);
             },
             child: ListView.builder(

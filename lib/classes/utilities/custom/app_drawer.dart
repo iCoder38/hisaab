@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myself_diary/classes/all_purchases.dart';
 import 'package:myself_diary/classes/splash.dart';
+import 'package:myself_diary/classes/utilities/firebase/resources.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -25,8 +26,10 @@ class AppDrawer extends StatelessWidget {
             _drawerTile(
               icon: Icons.list_alt,
               title: "Purchases",
-              onTap: () =>
-                  _navigateFromDrawer(context, const GetAllPurchasesScreen()),
+              onTap: () => _navigateFromDrawer(
+                context,
+                GetAllPurchasesScreen(userId: FirebaseAuthUtils.uid.toString()),
+              ),
             ),
             _drawerTile(
               icon: Icons.receipt_long,

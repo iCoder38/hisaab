@@ -1,0 +1,194 @@
+{
+  "project_info": {
+    "project_number": "229940913911",
+    "project_id": "bb-anamak-ai",
+    "storage_bucket": "bb-anamak-ai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229940913911:android:b428aee20d3956ec53d5f2",
+        "android_client_info": {
+          "package_name": "com.bb.anamak.ai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229940913911-44e11cpqa3g5u1d6hsrtj7nppmbg2seq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bb.anamak.ai",
+            "certificate_hash": "f924b9e76babdf17b73883120f2a77206a3bd062"
+          }
+        },
+        {
+          "client_id": "229940913911-93u28vf7npdbphlc788jvh591dt21v5l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bb.anamak.ai",
+            "certificate_hash": "c6fe288fbc1864e6db409ef0ba362703e1e5e349"
+          }
+        },
+        {
+          "client_id": "229940913911-dbt91mpvue0qhlq2rvc8bup1t97vmn42.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bb.anamak.ai",
+            "certificate_hash": "6759bdd7c8c39dc5e78c23e8c8c0d941b91eb438"
+          }
+        },
+        {
+          "client_id": "229940913911-kpqbancu0p5apk8gf95tuj6vi5hlhueq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bb.anamak.ai",
+            "certificate_hash": "715e6ca1dd228aff9cc5247bbce22f6ca2d40f37"
+          }
+        },
+        {
+          "client_id": "229940913911-r6lvl92rsfu6nomor8lpr5uo7q6176dj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bb.anamak.ai",
+            "certificate_hash": "61351ad0bc30a6aa78638d324cb09fe537b42f10"
+          }
+        },
+        {
+          "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDntAAdrYghH9tfW9JbxKwvPtAbYK7kaTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "229940913911-troh4a8fpuhk51ukjlf7oba41etq3i95.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bb.anamak.ai"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229940913911:android:3e7441f290ee063f53d5f2",
+        "android_client_info": {
+          "package_name": "com.bb.anamak.ai.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDntAAdrYghH9tfW9JbxKwvPtAbYK7kaTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "229940913911-troh4a8fpuhk51ukjlf7oba41etq3i95.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bb.anamak.ai"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229940913911:android:b4721fabfb0768d053d5f2",
+        "android_client_info": {
+          "package_name": "com.bb.myself_diary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDntAAdrYghH9tfW9JbxKwvPtAbYK7kaTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "229940913911-troh4a8fpuhk51ukjlf7oba41etq3i95.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bb.anamak.ai"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229940913911:android:bbe12b118418120053d5f2",
+        "android_client_info": {
+          "package_name": "com.example.anamak_user_registration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDntAAdrYghH9tfW9JbxKwvPtAbYK7kaTM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229940913911-eunmimcs01hr75qh8ufbatukg006j8vp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "229940913911-troh4a8fpuhk51ukjlf7oba41etq3i95.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bb.anamak.ai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:myself_diary/classes/utilities/APIs/service.dart';
 import 'package:myself_diary/classes/utilities/custom/app_drawer.dart';
+import 'package:myself_diary/classes/utilities/firebase/auth.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -11,16 +13,37 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  // firebase auth state
+  Stream<User?> authStateChanges = FirebaseAuth.instance.authStateChanges();
+
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
   String totalSpent = '';
 
+  String uid = '';
+
   @override
   void initState() {
     super.initState();
-    _fetchTotal();
+
+    // first check is this user logged in?
+    checkUserLoginStatus(context);
+  }
+
+  checkUserLoginStatus(context) async {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) async {
+      if (user == null) {
+        print('🔴 User is currently signed out!');
+        showAuthSheet(context);
+      } else {
+        print('🟢 User is signed in! UID: ${user.uid}');
+        uid = user.uid.toString();
+        await Future.delayed(Duration(milliseconds: 400));
+        _fetchTotal();
+      }
+    });
   }
 
   @override
@@ -147,7 +170,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Future<void> _fetchTotal() async {
     try {
       final api = ApiService();
-      final totalRes = await api.getTotalPurchase("1");
+      final totalRes = await api.getTotalPurchase(uid);
       final total = totalRes['total_spent'].toString();
 
       setState(() {
@@ -168,7 +191,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
     // Insert purchase
     final submitRes = await api.submitPurchase(
-      userId: "1",
+      userId: uid,
       title: _titleController.text.toString(),
       amount: _amountController.text.toString(),
       description: _descriptionController.text.toString(),
