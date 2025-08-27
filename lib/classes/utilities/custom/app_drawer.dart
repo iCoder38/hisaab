@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myself_diary/classes/all_purchases.dart';
+import 'package:myself_diary/classes/splash.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -10,7 +12,7 @@ class AppDrawer extends StatelessWidget {
         child: Column(
           children: [
             const UserAccountsDrawerHeader(
-              accountName: Text("Obonstore"),
+              accountName: Text("Myself Hisaab"),
               accountEmail: Text("hello@obonstore.com"),
               currentAccountPicture: CircleAvatar(child: Icon(Icons.store)),
               margin: EdgeInsets.zero,
@@ -18,12 +20,13 @@ class AppDrawer extends StatelessWidget {
             _drawerTile(
               icon: Icons.home_filled,
               title: "Home",
-              onTap: () => _drawerAction(context, "Home"),
+              onTap: () => _navigateFromDrawer(context, const SplashScreen()),
             ),
             _drawerTile(
-              icon: Icons.account_balance_wallet_outlined,
-              title: "Wallet",
-              onTap: () => _drawerAction(context, "Wallet"),
+              icon: Icons.list_alt,
+              title: "Purchases",
+              onTap: () =>
+                  _navigateFromDrawer(context, const GetAllPurchasesScreen()),
             ),
             _drawerTile(
               icon: Icons.receipt_long,
@@ -51,6 +54,12 @@ class AppDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // push
+  static void _navigateFromDrawer(BuildContext context, Widget page) {
+    Navigator.pop(context); // drawer close
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
 
   static ListTile _drawerTile({

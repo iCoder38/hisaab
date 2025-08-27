@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:myself_diary/classes/utilities/app_drawer.dart';
+import 'package:myself_diary/classes/utilities/APIs/service.dart';
+import 'package:myself_diary/classes/utilities/custom/app_drawer.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +14,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  String totalSpent = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTotal();
+  }
 
   @override
   void dispose() {
@@ -34,11 +43,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Title: $title | Amount: $amount | Desc: $description"),
-      ),
-    );
+    callSubmitPurchaseWB(context);
   }
 
   @override
@@ -60,9 +65,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 color: Colors.amberAccent,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  "12,000",
+                  totalSpent,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -134,5 +139,58 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         ),
       ),
     );
+  }
+
+  // ===================================
+  // ============ FETCH TOTAL AMOUNT API
+  // ===================================
+  Future<void> _fetchTotal() async {
+    try {
+      final api = ApiService();
+      final totalRes = await api.getTotalPurchase("1");
+      final total = totalRes['total_spent'].toString();
+
+      setState(() {
+        totalSpent = total;
+      });
+    } catch (e) {
+      setState(() {
+        totalSpent = "Error: $e";
+      });
+    }
+  }
+
+  // ===================================
+  // ============ SUBMIT API
+  // ===================================
+  callSubmitPurchaseWB(context) async {
+    final api = ApiService();
+
+    // Insert purchase
+    final submitRes = await api.submitPurchase(
+      userId: "1",
+      title: _titleController.text.toString(),
+      amount: _amountController.text.toString(),
+      description: _descriptionController.text.toString(),
+    );
+
+    // Get total
+    //final totalRes = await api.getTotalPurchase("1");
+    print(""" 
+    ============================================================
+    RESPONSE: $submitRes
+    ============================================================
+    """);
+    if (submitRes["success"] == true) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(submitRes["alertMessage"].toString())),
+      );
+      _fetchTotal();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(submitRes["alertMessage"].toString())),
+      );
+    }
+    // print(totalRes);
   }
 }
