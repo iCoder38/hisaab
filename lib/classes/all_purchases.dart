@@ -6,8 +6,10 @@ import 'package:myself_diary/classes/utilities/APIs/provider.dart';
 import 'package:myself_diary/classes/utilities/custom/app_drawer.dart';
 // import 'package:myself_diary/classes/utilities/custom/methods.dart';
 import 'package:myself_diary/classes/utilities/custom/month_year_alert.dart';
+import 'package:myself_diary/classes/utilities/custom/text.dart';
 // import 'package:myself_diary/classes/utilities/custom/text.dart';
 import 'package:myself_diary/classes/widgets/all_purchases.dart';
+import 'package:number_to_words/number_to_words.dart';
 
 class GetAllPurchasesScreen extends ConsumerStatefulWidget {
   const GetAllPurchasesScreen({super.key, required this.userId});
@@ -177,6 +179,19 @@ class _GetAllPurchasesScreenState extends ConsumerState<GetAllPurchasesScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     widgetHeaderPurchaseDetails(context, items, monthText, ts),
+                    // SHOW AMOUNT IN DIGITS
+                    Card(
+                      margin: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      child: CustomText(
+                        NumberToWord().convert(
+                          'en-in',
+                          int.parse(ts.toString()),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:myself_diary/classes/all_purchases.dart';
 import 'package:myself_diary/classes/in_app_web_view.dart';
 import 'package:myself_diary/classes/splash.dart';
-import 'package:myself_diary/classes/utilities/APIs/resources.dart';
 import 'package:myself_diary/classes/utilities/app_utilities/utils.dart';
 import 'package:myself_diary/classes/utilities/custom/text.dart';
 import 'package:myself_diary/classes/utilities/firebase/resources.dart';
-// If you want to open links in-app, add url_launcher and uncomment below:
-// import 'package:url_launcher/url_launcher.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -18,7 +15,7 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
-  bool _helpOpen = false; // controls expand/collapse
+  bool _helpOpen = false;
 
   @override
   Widget build(BuildContext context) {
